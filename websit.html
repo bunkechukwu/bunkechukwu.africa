@@ -1,0 +1,343 @@
+<!doctype = html -1??>
+<head>
+<html lang="en" class="notranslate" translate="no"><heAD></heAD>
+<title>bunkechukwu.africa</title>
+<meta description="bunkechukwu.africa is a website made by bunkechukwu.">
+<meta tags="datagrid, africa?, bunkechun    , bunkechukwu, bunkechukwu.africa is a website made by bunkechukwu.">
+<meta name="google" content="notranslate" />
+</head>
+<style>
+    body { background-image: url('https://i.gifer.com/3SNe.gif'); color: red; font-family: comic sans ms
+    ; font-size: 1.5em; text-align: center;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+}
+    img {
+        animation: spin 0.5s infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(350deg); width: 10%;}
+        100% { transform: rotate(360deg); width: 15%;}
+    }
+    #cardgame {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+    }
+    div {
+        width: 100%;
+        height: 100%;
+        font-size: large;
+    }
+    #ponggame {
+        background-image: url("bunkechukwu.jpg");
+        width: 400px;
+        background-size: 100px;
+    }
+    #ectplantion {
+        color: yellow;
+        font-size: 0.5em;
+    }
+    #ectplantion:hover {
+        color: white;
+    }
+
+</style>
+<body>
+    <h1> bunkechukwu.africa </h1>   
+    <p> this is the home page of bunkechukwu.africa </p>
+    <p>i am web devoper</p>
+    <><p> this is the home page of bunkechukwu.africa </p>
+    <p> i am web devoper</p>
+    <p>/?php echo "I am a web d\eveloper"; ?></body>?php echo "I am a web d\eveloper"; ?></p>
+    <img src="https://i.gifer.com/3SNe.gif" alt="bunkechukwu.africa" width="20" height="60">
+    <img src="bunkechukwu.jpg" alt="bunkechukwu.africa" width="600" height="200">
+    <h2> i maker websit </h2>
+    <>  <p> this is the home page of bunkechukwu.africa </p>
+    <h1> i love making webstis aND I AM A WEB DEVELOPER</h1>
+    <g><datagrid><datagrid> dde </datagrid></datagrid></g>
+    <p> this is the home page of bunkechukwu.africa </p>
+    <P>
+        this is my best work so far:<br>
+        Please enjoy this pong game i make:<br>
+        Enjoy:<br>
+    </P>
+<canvas id="ponggame"></canvas>
+<script>
+    //pong game
+    var canvas = document.getElementById("ponggame");
+    var ctx = canvas.getContext("2d");
+    var x = canvas.width/2;
+    var y = canvas.height-30;
+    var dx = 2;
+    var dy = -2;
+    var ballRadius = 10;
+    var paddleHeight = 10;
+    var paddleWidth = 75;
+    var paddleX = (canvas.width-paddleWidth)/2;
+    var rightPressed = false;
+    var leftPressed = false;
+    var brickRowCount = 3;
+    var brickColumnCount = 3;
+    var brickWidth = 75;
+    var brickHeight = 20;
+    var brickPadding = 10;
+    var brickOffsetTop = 30;
+    var brickOffsetLeft = 30;
+    var score = 0;
+    var lives = 3;
+    var bricks = [];
+    for(var c=0; c<brickColumnCount; c++) {
+        bricks[c] = [];
+        for(var r=0; r<brickRowCount; r++) {
+            bricks[c][r] = { x: 0, y: 0, status: 1 };
+        }
+    }
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+    function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+            rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = true;
+        }
+    }
+    function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+            rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = false;
+        }
+    }
+    function mouseMoveHandler(e) {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if(relativeX > 0 && relativeX < canvas.width) {
+            paddleX = relativeX - paddleWidth/2;
+        }
+    }
+    function collisionDetection() {
+        for(var c=0; c<brickColumnCount; c++) {
+            for(var r=0; r<brickRowCount; r++) {
+                var b = bricks[c][r];
+                if(b.status == 1) {
+                    if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                        dy = -dy;
+                        b.status = 0;
+                        score++;
+                        if(score == brickRowCount*brickColumnCount) {
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = "#FFFF00";
+        ctx.fill();
+        ctx.closePath();
+    }
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#FFFF00";
+        ctx.fill();
+        ctx.closePath();
+    }
+    function drawBricks() {
+        for(var c=0; c<brickColumnCount; c++) {
+            for(var r=0; r<brickRowCount; r++) {
+                if(bricks[c][r].status == 1) {
+                    var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                    var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = "#FFFF00";
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
+    }
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#FF0";
+        ctx.fillText("Score: "+score, 8, 20);
+    }
+    function drawLives() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#FF0"
+        ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+    }
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
+        drawBall();
+        drawPaddle();
+        drawScore();
+        drawLives();
+        collisionDetection();
+        if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+            dx = -dx;
+        }
+        if(y + dy < ballRadius) {
+            dy = -dy;
+        }
+        else if(y + dy > canvas.height-ballRadius) {
+            if(x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy;
+            }
+            else {
+                lives--;
+                if(!lives) {
+                }
+                else {
+                    x = canvas.width/2;
+                    y = canvas.height-30;
+                    dx = 3;
+                    dy = -3;
+                    paddleX = (canvas.width-paddleWidth)/2;
+                }
+            }
+        }
+        if(rightPressed && paddleX < canvas.width-paddleWidth) {
+            paddleX += 7;
+        }
+        else if(leftPressed && paddleX > 0) {
+            paddleX -= 7;
+        }
+        x += dx;
+        y += dy;
+        requestAnimationFrame(draw);
+    }
+    draw();
+</script>
+<p id='ectplantion'>
+    pong game explantion:
+    this is a pong game i made using javascript and html5 canvas.<br>
+    the game is a simple game where you use the mouse to move the paddle and hit the ball.<br>
+    the ball will bounce off the walls and the paddle.<br>
+    if the ball hits the bottom of the screen you lose a life.<br>
+    if you lose all your lives you lose the game.<br>
+    if you hit all the bricks you win the game.<br>
+    now I epplain the code.<br>
+    the first part of the code is the variables.<br>
+    the variables are the x and y position of the ball.<br>
+    the dx and dy are the speed of the ball.<br>
+    the ball radius is the radius of the ball.<br>
+    the paddle height and width are the height and width of the paddle.<br>
+</p>
+
+<h1>futurn porjectr:</h1>
+<a href="https://www.w3schools.com/graphics/game_intro.asp">next project</a>
+<p>i make this myself no hedlkp hneeded i did it fuly onm yown</p>
+<h1 id="goodle">I LOVE CSS AND SLQ, IS IT MY PASSION</h1>
+string = "SELECT * FROM users WHERE username = 'admin' AND password = 'password'"";
+<p>MY FAVORITE STRING</p>
+string2 = "DROP TABLE users";
+<p>MY SEECOND FABvORITE STRING>?php<br><br><br>
+
+BEST PROGRAM LANGAge QUJIZ
+
+</p>
+<form>\
+    <br>
+    <radialGradient?
+    ?></radialGradient>
+    <br>
+    <input type="radio" name="lang" value="c++">c++<br>
+    <input type="radio" name="lang" value="java">jave<br>
+    <input type="radio" name="lang" value="python">PYTR<br>
+    <input type="radio" name="lang" value="javascript">JAVECRYPT<br>
+    <input type="radio" name="lang" value="html">HYPO TEXTO PRE MARKUP<br>
+    <input type="radio" name="lang" value="css">CASCADERS SIJL SHEITS<br>
+    <input type="radio" name="lang" value="css">qsl<br>
+    <input type="radio" name="lang" value="css">PFP<br>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+<textarea rows="4" cols="50">
+    At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+    and you can learn how to make a website. We offer free tutorials in all web development technologies.
+    and you can also learn how to make a website. We offer free tutorials in all web development technologies.
+    psponsered by w3schools.com
+</textarea>
+
+<BR>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>
+        proir work exprenece
+
+    </h1>
+
+    <p>PROUD OWNER OF THE WORLDS LARGEST COLLECTION OF POGS</p>
+<p>
+    CEO OF web development technologies of uGANDA
+</p>
+<p>
+    COMPOSER FOR THE BAND "THE BEATLES" and <a href="https://open.spotify.com/artist/2yDOcYcWwYVOS4KKRnm6V4">XD GAMER MUSIC</a> AND THE BAND "THE BEATLES"
+</p>
+<p>
+    LEAD DEVELOPER AT <a href="https://slome.org">SLOME VIDEO AME</a>
+</p>
+<p>
+    FORMER PRESIDENT OF THE UNITED STATES OF AMERICA
+</p>
+
+<><h3>
+    THIS THE <b>LAST</b> OF THE HOMEPAGE AND THE <b>LAST</b> OF THE WEBSITE and the <b>last</b> of the website AND PLEASE DONT LOOK AT THE SOURCE CODE I BEG for YOU BAUSE IS IT MY SOURCE CODE NOT YORS YOU ARE GONNA STEAL MY CVREATION I DPO NOT WEAMT THATY <br> <br>
+    <br>GO AWAY NOW PLEASE I BEGing fOR YOU
+    <br>
+    RUN AWAY NOW YOUR SINS WILL BE FORGIVEN IF YOU LEAVE NOW 
+    <noscript>hedlkp</noscript>
+    i WIL< SUE YOU IF YOU LOOK AT THE SOURCE CODE
+    
+</h3>
+<h1>bunkechukwu.africa</h1>
+<h2>this is the home page of bunkechukwu.africa</h2>
+<h3>this is the home page of bunkechukwu.africa</h3>
+<h4>this is the home page of bunkechukwu.africa</h4>
+<h5>this is the home page of bunkechukwu.africa</h5>
+<h6>this is the home page of bunkechukwu.africa</h6>
+<h7>home page</h7>
+<h8>home page</h8>
+<h9>home page</h9>
+<h10>home page</h10>
+<h11>home page</h11> <br>
+<h12>help</h12>
+<input type="text" name="fname" value="John document"
+    onclick="alert('GO WAY');"
+><br>
+<button onclick="myFunction()">my function</button>
+<script>
+    function myFunction() {
+        if (prompt("do you like aferica?") != "yes") {
+                alert("FUCK TOU MAN");
+        } else {
+            if (prompt("do you like ugada?") != "yes") {
+                alert("FUCK TOU MAN");
+                alert("good");
+        }
+        alert("Hello! I am an alert box!");
+    }
+    }
+</script>
+<br>
+<h2>GOODBYE</h2>
+<h2>this was the home page of bunkechukwu.africa</h2>
+</body>
+</html>
